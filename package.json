@@ -1,0 +1,32 @@
+{
+  "name": "react-custom-rangeslider",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint '**/*.js'",
+    "lint:fix": "prettier-eslint '**/*.js' --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MyRibbonApps/react-custom-rangeslider.git"
+  },
+  "keywords": [
+    "react rangeslider",
+    "react",
+    "react slider"
+  ],
+  "author": "Anton Franzen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MyRibbonApps/react-custom-rangeslider/issues"
+  },
+  "homepage": "https://github.com/MyRibbonApps/react-custom-rangeslider#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.6.2",
+    "prettier-eslint": "^13.0.0",
+    "prettier-eslint-cli": "^5.0.1"
+  }
+}
