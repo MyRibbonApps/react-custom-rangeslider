@@ -1,7 +1,5 @@
-import React, { FC, useState } from "react"
-import { useRef } from "react"
-import { useEffect } from "react"
-import styles from "./styles.css"
+import React, { FC, useEffect, useRef, useState } from "react"
+import styles from "./styles"
 
 type RangeSliderProps = {
   progressBg?: string
@@ -15,37 +13,35 @@ type RangeSliderProps = {
   step: number
 }
 
-const RangeSlider: FC<RangeSliderProps> = (
-  {
-    // progressBg = "",
-    // trackBg = "",
-    // thumbBg = "",
-    // trackSize = 20,
-    // thumbSize = 20,
-    // min = 0,
-    // max = 100,
-    // step = 1,
-  }
-) => {
-  const ref = useRef(null)
+const RangeSlider: FC<RangeSliderProps> = (props) => {
+  const inputRef = useRef<HTMLInputElement>(null)
   const [value, setValue] = useState("0")
 
-  const setCssProgress = (inputEl: any) => {
-    const percent =
-      ((inputEl.value - inputEl.min) / (inputEl.max - inputEl.min)) * 100
-    inputEl.style.setProperty("--webkitProgressPercent", `${percent}%`)
-  }
+  // const setCssProgress = (inputEl: any) => {
+  //   const percent =
+  //     ((inputEl.value - inputEl.min) / (inputEl.max - inputEl.min)) * 100 // 100 - 0 / 100 - 0 = 1 * 100 = 100%
+  //   inputEl.style.setProperty("--webkitProgressPercent", `${percent}%`)
+  // }
 
+  const generateStyles = () => {
+    return styles(props)
+  }
   useEffect(() => {
-    const getRangeslider = ref.current
-    setCssProgress(getRangeslider)
+    const getRangeslider = inputRef
+    // setCssProgress(getRangeslider)
+    if (getRangeslider.current) {
+      const sliderStyles = getRangeslider.current.style
+      console.log(sliderStyles)
+      console.log(getRangeslider.current)
+    }
   }, [])
   return (
     <>
-      <style>{styles}</style>
+      {/* <style>{styles}</style> */}
+      <style>{generateStyles()}</style>
       <h1>Range Slider!!!!</h1>
       <input
-        ref={ref}
+        ref={inputRef}
         onChange={(range) => setValue(range.target.value)}
         // onMouseMove={}
         // onMouseDown={}
