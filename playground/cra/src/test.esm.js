@@ -45,7 +45,10 @@ function generateStyles({
     }
 
     */ The thumb on the range input */
-    input[type=range]::-webkit-slider-thumb {}
+    input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+      appearance: none;
+    }
     input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
@@ -101,35 +104,48 @@ function generateStyles({
 const RangeSlider = (props) => {
   const inputRef = useRef(null)
   const [value, setValue] = useState("0")
-  // const setCssProgress = (inputEl: any) => {
-  //   const percent =
-  //     ((inputEl.value - inputEl.min) / (inputEl.max - inputEl.min)) * 100 // 100 - 0 / 100 - 0 = 1 * 100 = 100%
-  //   inputEl.style.setProperty("--webkitProgressPercent", `${percent}%`)
-  // }
+  let isChanging = false
+  const setCssProgress = (inputEl) => {
+    const percent =
+      ((inputEl.value - inputEl.min) / (inputEl.max - inputEl.min)) * 100 // 100 - 0 / 100 - 0 = 1 * 100 = 100%
+    inputEl.style.setProperty("--webkitProgressPercent", `${percent}%`)
+  }
+  const onMouseMove = () => {
+    if (!isChanging) return
+    setCssProgress(inputRef.current)
+  }
   const generateStyles$1 = () => {
     return generateStyles(props)
   }
   useEffect(() => {
-    const getRangeslider = inputRef
-    // setCssProgress(getRangeslider)
-    if (getRangeslider.current) {
-      const sliderStyles = getRangeslider.current.style
-      console.log(sliderStyles)
-      console.log(getRangeslider.current)
-    }
+    // const getRangeslider = inputRef
+    // if (getRangeslider.current) {
+    //   const sliderStyles = getRangeslider.current.style
+    //   console.log(sliderStyles)
+    //   console.log(getRangeslider.current)
+    // }
   }, [])
   return React.createElement(
     React.Fragment,
     null,
     React.createElement("style", null, generateStyles$1()),
-    React.createElement("h1", null, "Range Slider!!!!"),
+    React.createElement("h1", null, "Range Slider"),
     React.createElement("input", {
       ref: inputRef,
-      onChange: (range) => setValue(range.target.value),
-      // onMouseMove={}
-      // onMouseDown={}
-      // onMouseUp={}
-      // onMouseLeave={}
+      onChange: (range) => {
+        setValue(range.target.value)
+        isChanging = true
+      },
+      onClick: () => {
+        onMouseMove()
+      },
+      onMouseMove: () => {
+        isChanging = true
+        onMouseMove()
+      },
+      onMouseDown: () => (isChanging = true),
+      onMouseUp: () => (isChanging = false),
+      onMouseLeave: () => (isChanging = false),
       type: "range",
       min: "2000",
       max: "30000",
