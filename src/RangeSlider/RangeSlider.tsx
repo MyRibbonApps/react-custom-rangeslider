@@ -1,21 +1,26 @@
-import React, { FC, useEffect, useRef, useState } from "react"
+import React, { FC, useRef } from "react"
 import styles from "./styles"
 
 type RangeSliderProps = {
   progressBg?: string
   trackBg?: string
   thumbBg?: string
+
   trackSize?: number
   thumbSize?: number
 
-  min: number
-  max: number
-  step: number
+  min?: number
+  max?: number
+  step?: number
+  value: any
+  setValue: any
 }
 
 const RangeSlider: FC<RangeSliderProps> = (props) => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const [value, setValue] = useState("0")
+  // const [value, setValue] = useState("0")
+  const { min = 0, max = 100, step = 1, value, setValue } = props
+
   let isChanging = false
 
   const setCssProgress = (inputEl: any) => {
@@ -28,27 +33,23 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
     if (!isChanging) return
     setCssProgress(inputRef.current)
   }
-
+  const onMouseLeave = () => {
+    isChanging = false
+  }
+  const onMouseStart = () => {
+    isChanging = true
+  }
   const generateStyles = () => {
     return styles(props)
   }
-  useEffect(() => {
-    // const getRangeslider = inputRef
-    // if (getRangeslider.current) {
-    //   const sliderStyles = getRangeslider.current.style
-    //   console.log(sliderStyles)
-    //   console.log(getRangeslider.current)
-    // }
-  }, [])
+
   return (
     <>
       <style>{generateStyles()}</style>
-      <h1>Range Slider</h1>
       <input
         ref={inputRef}
         onChange={(range) => {
           setValue(range.target.value)
-          isChanging = true
         }}
         onClick={() => {
           onMouseMove()
@@ -57,13 +58,19 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
           isChanging = true
           onMouseMove()
         }}
-        onMouseDown={() => (isChanging = true)}
-        onMouseUp={() => (isChanging = false)}
-        onMouseLeave={() => (isChanging = false)}
+        onTouchMove={() => {
+          isChanging = true
+          onMouseMove()
+        }}
+        onTouchStart={onMouseStart}
+        onTouchEnd={onMouseLeave}
+        onMouseDown={onMouseStart}
+        onMouseUp={onMouseLeave}
+        onMouseLeave={onMouseLeave}
         type="range"
-        min="2000"
-        max="30000"
-        step="500"
+        min={min}
+        max={max}
+        step={step}
         value={value}
       ></input>
     </>

@@ -1,18 +1,28 @@
+import sizes from "./sizes.json"
+
 type RangeSliderProps = {
   progressBg?: string
   trackBg?: string
   thumbBg?: string
+  size?: string
   trackSize?: number
   thumbSize?: number
 }
 
 export default function generateStyles({
-  progressBg = "black",
-  trackBg = "purple",
-  thumbBg = "#000",
-  trackSize = 20,
-  thumbSize = 20,
+  progressBg = "#06c",
+  trackBg = "#f2f2f2",
+  thumbBg = "#fbfbfd",
+  size = "M",
 }: RangeSliderProps) {
+  let trackSize = 20
+  let thumbSize = 20
+
+  const styleProperties = sizes.find((sz) => sz.size === size) // Tries to find the style the user passed down, if not then add default style
+  if (styleProperties) {
+    trackSize = styleProperties.trackSize
+    thumbSize = styleProperties.thumbSize
+  }
   const style = `
   /* Default style for the element */
     input[type="range"]  {
@@ -37,17 +47,17 @@ export default function generateStyles({
          ${progressBg} var(--webkitProgressPercent),
          ${trackBg} var(--webkitProgressPercent)
         );
-        border-radius: calc(${trackSize} / 2);
+        border-radius: calc(${trackSize}px / 2);
     }
     input[type="range"]::-moz-range-track {
         height: ${trackSize}px;
         background-color: ${trackBg};
-        border-radius: calc(${trackSize} / 2);
+        border-radius: calc(${trackSize}px / 2);
     }
     input[type="range"]::-ms-track {
         height: ${trackSize}px;
         background-color: ${trackBg};
-        border-radius: calc(${trackSize} / 2);
+        border-radius: calc(${trackSize}px / 2);
     }
 
     */ The thumb on the range input */
@@ -62,9 +72,15 @@ export default function generateStyles({
       width: ${thumbSize}px;
       height: ${thumbSize}px;
       border-radius: calc(${thumbSize}px / 2);
+      /*
       border: 7px solid black;
+      */
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
       margin-top: calc(((${thumbSize}px - ${trackSize}px) / 2) * -1);
+      position: relative;
+       /*
+        right: 4px;
+        */
       cursor: pointer;
 }
     input[type="range"]::-moz-range-thumb {
@@ -74,9 +90,15 @@ export default function generateStyles({
         height: ${thumbSize}px;
         background-color: ${thumbBg};
         border-radius: calc(${thumbSize}px / 2);
+        /*
         border: 7px solid black;
+        */
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         margin-top: calc(((${thumbSize}px - ${trackSize}px) / 2) * -1);
+        position: relative;
+        /*
+        right: 4px;
+        */
         cursor: pointer;
 }
     input[type="range"]::-ms-thumb {
@@ -86,9 +108,15 @@ export default function generateStyles({
         height: ${thumbSize}px;
         background-color: ${thumbBg};
         border-radius: calc(${thumbSize}px / 2);
+        /*
         border: 7px solid black;
+        */
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         margin-top: calc(((${thumbSize}px - ${trackSize}px) / 2) * -1);
+        position: relative;
+        /*
+        right: 4px;
+        */
         cursor: pointer;
 }
 

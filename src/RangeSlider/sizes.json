@@ -1,0 +1,12 @@
+[
+  {
+    "size": "XXL",
+    "thumbSize": 60,
+    "trackSize": 50,
+    "spacing": { "right": 4 }
+  },
+  { "size": "XL", "thumbSize": 50, "trackSize": 40, "spacing": { "right": 4 } },
+  { "size": "L", "thumbSize": 40, "trackSize": 30, "spacing": { "right": 4 } },
+  { "size": "M", "thumbSize": 30, "trackSize": 20, "spacing": { "right": 4 } },
+  { "size": "S", "thumbSize": 25, "trackSize": 15, "spacing": { "right": 4 } }
+]
