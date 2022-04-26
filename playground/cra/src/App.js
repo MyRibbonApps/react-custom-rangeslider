@@ -1,9 +1,9 @@
 import "./App.css"
-import Slider from "react-custom-rangeslider/lib/index.esm"
+import Slider from "react-custom-rangeslider"
 import React, { useState } from "react"
 
 function App() {
-  const [value, setValue] = useState(1)
+  const [value, setValue] = useState(0)
   return (
     <div className="App" style={{ width: "500px", margin: "auto" }}>
       {value}
