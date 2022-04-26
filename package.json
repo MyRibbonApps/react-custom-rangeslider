@@ -9,7 +9,9 @@
     "lint": "eslint '**/*.js'",
     "lint:fix": "prettier-eslint '**/*.js' --write",
     "prebuild": "",
-    "build": "rollup --config"
+    "build": "rollup --config",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "husky": {
     "hooks": {
@@ -39,7 +41,14 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@rollup/plugin-json": "^4.1.0",
+    "@storybook/addon-actions": "^6.5.0-beta.0",
+    "@storybook/addon-essentials": "^6.5.0-beta.0",
+    "@storybook/addon-interactions": "^6.5.0-beta.0",
+    "@storybook/addon-links": "^6.5.0-beta.0",
+    "@storybook/react": "^6.5.0-beta.0",
+    "@storybook/testing-library": "^0.0.11",
     "@types/react": "^18.0.6",
+    "babel-loader": "^8.2.5",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-react": "^7.29.4",
@@ -48,7 +57,8 @@
     "prettier": "^2.6.2",
     "prettier-eslint": "^13.0.0",
     "prettier-eslint-cli": "^5.0.1",
-    "react": "^18.0.0",
+    "react": "18.0.0",
+    "react-dom": "18.0.0",
     "rollup": "^2.70.1",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-node-resolve": "^5.2.0",
@@ -58,6 +68,10 @@
     "typescript": "^4.6.3"
   },
   "peerDependencies": {
-    "react": ">=17"
+    "react": ">=16.8.0"
+  },
+  "dependencies": {
+    "remove": "^0.1.5",
+    "storybook-addon-state": "^1.0.3"
   }
 }

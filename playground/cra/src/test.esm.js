@@ -1,12 +1,26 @@
-import React, { useRef, useState, useEffect } from "react"
+import React, { useRef } from "react"
+
+var sizes = [
+  { size: "XXL", thumbSize: 60, trackSize: 50, spacing: { right: 4 } },
+  { size: "XL", thumbSize: 50, trackSize: 40, spacing: { right: 4 } },
+  { size: "L", thumbSize: 40, trackSize: 30, spacing: { right: 4 } },
+  { size: "M", thumbSize: 30, trackSize: 20, spacing: { right: 4 } },
+  { size: "S", thumbSize: 25, trackSize: 15, spacing: { right: 4 } },
+]
 
 function generateStyles({
-  progressBg = "black",
-  trackBg = "purple",
-  thumbBg = "#000",
-  trackSize = 20,
-  thumbSize = 20,
+  progressBg = "#06c",
+  trackBg = "#f2f2f2",
+  thumbBg = "#fbfbfd",
+  size = "M",
 }) {
+  let trackSize = 20
+  let thumbSize = 20
+  const styleProperties = sizes.find((sz) => sz.size === size) // Tries to find the style the user passed down, if not then add default style
+  if (styleProperties) {
+    trackSize = styleProperties.trackSize
+    thumbSize = styleProperties.thumbSize
+  }
   const style = `
   /* Default style for the element */
     input[type="range"]  {
@@ -31,17 +45,17 @@ function generateStyles({
          ${progressBg} var(--webkitProgressPercent),
          ${trackBg} var(--webkitProgressPercent)
         );
-        border-radius: calc(${trackSize} / 2);
+        border-radius: calc(${trackSize}px / 2);
     }
     input[type="range"]::-moz-range-track {
         height: ${trackSize}px;
         background-color: ${trackBg};
-        border-radius: calc(${trackSize} / 2);
+        border-radius: calc(${trackSize}px / 2);
     }
     input[type="range"]::-ms-track {
         height: ${trackSize}px;
         background-color: ${trackBg};
-        border-radius: calc(${trackSize} / 2);
+        border-radius: calc(${trackSize}px / 2);
     }
 
     */ The thumb on the range input */
@@ -56,9 +70,15 @@ function generateStyles({
       width: ${thumbSize}px;
       height: ${thumbSize}px;
       border-radius: calc(${thumbSize}px / 2);
+      /*
       border: 7px solid black;
+      */
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
       margin-top: calc(((${thumbSize}px - ${trackSize}px) / 2) * -1);
+      position: relative;
+       /*
+        right: 4px;
+        */
       cursor: pointer;
 }
     input[type="range"]::-moz-range-thumb {
@@ -68,9 +88,15 @@ function generateStyles({
         height: ${thumbSize}px;
         background-color: ${thumbBg};
         border-radius: calc(${thumbSize}px / 2);
+        /*
         border: 7px solid black;
+        */
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         margin-top: calc(((${thumbSize}px - ${trackSize}px) / 2) * -1);
+        position: relative;
+        /*
+        right: 4px;
+        */
         cursor: pointer;
 }
     input[type="range"]::-ms-thumb {
@@ -80,9 +106,15 @@ function generateStyles({
         height: ${thumbSize}px;
         background-color: ${thumbBg};
         border-radius: calc(${thumbSize}px / 2);
+        /*
         border: 7px solid black;
+        */
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         margin-top: calc(((${thumbSize}px - ${trackSize}px) / 2) * -1);
+        position: relative;
+        /*
+        right: 4px;
+        */
         cursor: pointer;
 }
 
@@ -103,7 +135,8 @@ function generateStyles({
 
 const RangeSlider = (props) => {
   const inputRef = useRef(null)
-  const [value, setValue] = useState("0")
+  // const [value, setValue] = useState("0")
+  const { min = 0, max = 100, step = 1, value, setValue } = props
   let isChanging = false
   const setCssProgress = (inputEl) => {
     const percent =
@@ -114,27 +147,23 @@ const RangeSlider = (props) => {
     if (!isChanging) return
     setCssProgress(inputRef.current)
   }
+  const onMouseLeave = () => {
+    isChanging = false
+  }
+  const onMouseStart = () => {
+    isChanging = true
+  }
   const generateStyles$1 = () => {
     return generateStyles(props)
   }
-  useEffect(() => {
-    // const getRangeslider = inputRef
-    // if (getRangeslider.current) {
-    //   const sliderStyles = getRangeslider.current.style
-    //   console.log(sliderStyles)
-    //   console.log(getRangeslider.current)
-    // }
-  }, [])
   return React.createElement(
     React.Fragment,
     null,
     React.createElement("style", null, generateStyles$1()),
-    React.createElement("h1", null, "Range Slider"),
     React.createElement("input", {
       ref: inputRef,
       onChange: (range) => {
         setValue(range.target.value)
-        isChanging = true
       },
       onClick: () => {
         onMouseMove()
@@ -143,13 +172,19 @@ const RangeSlider = (props) => {
         isChanging = true
         onMouseMove()
       },
-      onMouseDown: () => (isChanging = true),
-      onMouseUp: () => (isChanging = false),
-      onMouseLeave: () => (isChanging = false),
+      onTouchMove: () => {
+        isChanging = true
+        onMouseMove()
+      },
+      onTouchStart: onMouseStart,
+      onTouchEnd: onMouseLeave,
+      onMouseDown: onMouseStart,
+      onMouseUp: onMouseLeave,
+      onMouseLeave: onMouseLeave,
       type: "range",
-      min: "2000",
-      max: "30000",
-      step: "500",
+      min: min,
+      max: max,
+      step: step,
       value: value,
     })
   )

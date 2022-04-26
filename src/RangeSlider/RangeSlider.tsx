@@ -5,20 +5,18 @@ type RangeSliderProps = {
   progressBg?: string
   trackBg?: string
   thumbBg?: string
-
-  trackSize?: number
-  thumbSize?: number
+  size?: "S" | "M" | "L" | "XL" | "XXL"
 
   min?: number
   max?: number
   step?: number
+
   value: any
   setValue: any
 }
 
 const RangeSlider: FC<RangeSliderProps> = (props) => {
   const inputRef = useRef<HTMLInputElement>(null)
-  // const [value, setValue] = useState("0")
   const { min = 0, max = 100, step = 1, value, setValue } = props
 
   let isChanging = false
@@ -48,12 +46,13 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
       <style>{generateStyles()}</style>
       <input
         ref={inputRef}
-        onChange={(range) => {
-          setValue(range.target.value)
-        }}
-        onClick={() => {
-          onMouseMove()
-        }}
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(range) => setValue(range.target.value)}
+        onClick={onMouseMove}
         onMouseMove={() => {
           isChanging = true
           onMouseMove()
@@ -67,11 +66,6 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
         onMouseDown={onMouseStart}
         onMouseUp={onMouseLeave}
         onMouseLeave={onMouseLeave}
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
       ></input>
     </>
   )
