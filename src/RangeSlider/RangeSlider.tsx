@@ -29,7 +29,7 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
 
   const onMouseMove = () => {
     if (!isChanging) return
-    setCssProgress(inputRef.current)
+    if (inputRef) setCssProgress(inputRef.current)
   }
   const onMouseLeave = () => {
     isChanging = false

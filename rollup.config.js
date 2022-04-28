@@ -41,5 +41,5 @@ export default {
       include: "**/*.css"
     })
   ],
-  external: "react"
+  external: ["react", "react-dom"]
 }

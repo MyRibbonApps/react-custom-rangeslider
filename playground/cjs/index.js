@@ -7,8 +7,8 @@ const ReactSlider = require("react-custom-rangeslider")
 const app = express()
 
 app.get("/", (req, res) => {
+  console.log(ReactSlider)
   const el = React.createElement(ReactSlider)
-  console.log(el)
   const body = ReactDOM.renderToString(el)
   console.log(body)
   res.send(

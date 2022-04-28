@@ -61,11 +61,11 @@ export default function generateStyles({
     }
 
     */ The thumb on the range input */
-    input[type=range]::-webkit-slider-thumb {
+    input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
       appearance: none;
     }
-    input[type=range]::-webkit-slider-thumb {
+    input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
       background: ${thumbBg};

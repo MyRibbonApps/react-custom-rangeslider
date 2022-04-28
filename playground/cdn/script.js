@@ -1,27 +1,42 @@
-import React, { useRef } from "react"
+;(function (global, factory) {
+  typeof exports === "object" && typeof module !== "undefined"
+    ? (module.exports = factory(require("react")))
+    : typeof define === "function" && define.amd
+    ? define(["react"], factory)
+    : ((global =
+        typeof globalThis !== "undefined" ? globalThis : global || self),
+      (global.ReactCustomRangeSlider = factory(global.React)))
+})(this, function (React) {
+  "use strict"
 
-var sizes = [
-  { size: "XXL", thumbSize: 60, trackSize: 50, spacing: { right: 4 } },
-  { size: "XL", thumbSize: 50, trackSize: 40, spacing: { right: 4 } },
-  { size: "L", thumbSize: 40, trackSize: 30, spacing: { right: 4 } },
-  { size: "M", thumbSize: 30, trackSize: 20, spacing: { right: 4 } },
-  { size: "S", thumbSize: 25, trackSize: 15, spacing: { right: 4 } },
-]
-
-function generateStyles({
-  progressBg = "#06c",
-  trackBg = "#f2f2f2",
-  thumbBg = "#fbfbfd",
-  size = "M",
-}) {
-  let trackSize = 20
-  let thumbSize = 20
-  const styleProperties = sizes.find((sz) => sz.size === size) // Tries to find the style the user passed down, if not then add default style
-  if (styleProperties) {
-    trackSize = styleProperties.trackSize
-    thumbSize = styleProperties.thumbSize
+  function _interopDefaultLegacy(e) {
+    return e && typeof e === "object" && "default" in e ? e : { default: e }
   }
-  const style = `
+
+  var React__default = /*#__PURE__*/ _interopDefaultLegacy(React)
+
+  var sizes = [
+    { size: "XXL", thumbSize: 70, trackSize: 50, spacing: { right: 4 } },
+    { size: "XL", thumbSize: 50, trackSize: 40, spacing: { right: 4 } },
+    { size: "L", thumbSize: 40, trackSize: 30, spacing: { right: 4 } },
+    { size: "M", thumbSize: 30, trackSize: 20, spacing: { right: 4 } },
+    { size: "S", thumbSize: 25, trackSize: 15, spacing: { right: 4 } },
+  ]
+
+  function generateStyles({
+    progressBg = "#06c",
+    trackBg = "#f2f2f2",
+    thumbBg = "#fbfbfd",
+    size = "M",
+  }) {
+    let trackSize = 20
+    let thumbSize = 20
+    const styleProperties = sizes.find((sz) => sz.size === size) // Tries to find the style the user passed down, if not then add default style
+    if (styleProperties) {
+      trackSize = styleProperties.trackSize
+      thumbSize = styleProperties.thumbSize
+    }
+    const style = `
   /* Default style for the element */
     input[type="range"]  {
          -webkit-appearance: none;
@@ -130,64 +145,64 @@ function generateStyles({
             border-radius: calc(${trackSize}px / 2) 0 0 calc(${trackSize}px / 2);
 }
     `
-  return style
-}
+    return style
+  }
 
-const RangeSlider = (props) => {
-  const inputRef = useRef(null)
-  // const [value, setValue] = useState("0")
-  const { min = 0, max = 100, step = 1, value, setValue } = props
-  let isChanging = false
-  const setCssProgress = (inputEl) => {
-    const percent =
-      ((inputEl.value - inputEl.min) / (inputEl.max - inputEl.min)) * 100 // 100 - 0 / 100 - 0 = 1 * 100 = 100%
-    inputEl.style.setProperty("--webkitProgressPercent", `${percent}%`)
+  const RangeSlider = (props) => {
+    const inputRef = React.useRef(null)
+    const { min = 0, max = 100, step = 1, value, setValue } = props
+    let isChanging = false
+    const setCssProgress = (inputEl) => {
+      const percent =
+        ((inputEl.value - inputEl.min) / (inputEl.max - inputEl.min)) * 100 // 100 - 0 / 100 - 0 = 1 * 100 = 100%
+      inputEl.style.setProperty("--webkitProgressPercent", `${percent}%`)
+    }
+    const onMouseMove = () => {
+      if (!isChanging) return
+      if (inputRef) setCssProgress(inputRef.current)
+    }
+    const onMouseLeave = () => {
+      isChanging = false
+    }
+    const onMouseStart = () => {
+      isChanging = true
+    }
+    const generateStyles$1 = () => {
+      return generateStyles(props)
+    }
+    return React__default["default"].createElement(
+      React__default["default"].Fragment,
+      null,
+      React__default["default"].createElement(
+        "style",
+        null,
+        generateStyles$1()
+      ),
+      React__default["default"].createElement("input", {
+        ref: inputRef,
+        type: "range",
+        min: min,
+        max: max,
+        step: step,
+        value: value,
+        onChange: (range) => setValue(range.target.value),
+        onClick: onMouseMove,
+        onMouseMove: () => {
+          isChanging = true
+          onMouseMove()
+        },
+        onTouchMove: () => {
+          isChanging = true
+          onMouseMove()
+        },
+        onTouchStart: onMouseStart,
+        onTouchEnd: onMouseLeave,
+        onMouseDown: onMouseStart,
+        onMouseUp: onMouseLeave,
+        onMouseLeave: onMouseLeave,
+      })
+    )
   }
-  const onMouseMove = () => {
-    if (!isChanging) return
-    setCssProgress(inputRef.current)
-  }
-  const onMouseLeave = () => {
-    isChanging = false
-  }
-  const onMouseStart = () => {
-    isChanging = true
-  }
-  const generateStyles$1 = () => {
-    return generateStyles(props)
-  }
-  return React.createElement(
-    React.Fragment,
-    null,
-    React.createElement("style", null, generateStyles$1()),
-    React.createElement("input", {
-      ref: inputRef,
-      onChange: (range) => {
-        setValue(range.target.value)
-      },
-      onClick: () => {
-        onMouseMove()
-      },
-      onMouseMove: () => {
-        isChanging = true
-        onMouseMove()
-      },
-      onTouchMove: () => {
-        isChanging = true
-        onMouseMove()
-      },
-      onTouchStart: onMouseStart,
-      onTouchEnd: onMouseLeave,
-      onMouseDown: onMouseStart,
-      onMouseUp: onMouseLeave,
-      onMouseLeave: onMouseLeave,
-      type: "range",
-      min: min,
-      max: max,
-      step: step,
-      value: value,
-    })
-  )
-}
 
-export { RangeSlider as default }
+  return RangeSlider
+})

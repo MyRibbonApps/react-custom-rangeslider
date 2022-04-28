@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 
-import RangeSlider from "../index"
+import RangeSlider from "./index"
 
 export default {
   title: "RangeSlider",

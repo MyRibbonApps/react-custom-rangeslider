@@ -4,25 +4,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
   </head>
 
   <div class="app"></div>
-  <script
-    crossorigin
-    src="https://unpkg.com/react@18/umd/react.production.min.js"
-  ></script>
-  <script
-    crossorigin
-    src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
-  ></script>
-  <script src="./node_modules/react-custom-rangeslider/lib/index.umd.js"></script>
+  <script src="script.js"></script>
   <script>
     const app = document.querySelector(".app")
     const Slider = window.ReactCustomRangeSlider
-    console.log(Slider)
-    const value = "0"
-    const setValue = () => value++
-    const SliderCommponent = Slider({ value, setValue })
     ReactDOM.render(React.createElement(Slider), app)
   </script>
   <body></body>
