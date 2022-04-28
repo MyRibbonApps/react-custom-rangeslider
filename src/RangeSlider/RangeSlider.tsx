@@ -1,4 +1,4 @@
-import React, { FC, useRef } from "react"
+import React, { useRef } from "react"
 import styles from "./styles"
 
 type RangeSliderProps = {
@@ -15,7 +15,7 @@ type RangeSliderProps = {
   setValue: any
 }
 
-const RangeSlider: FC<RangeSliderProps> = (props) => {
+const RangeSlider = (props: RangeSliderProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const { min = 0, max = 100, step = 1, value, setValue } = props
 
@@ -31,12 +31,15 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
     if (!isChanging) return
     if (inputRef) setCssProgress(inputRef.current)
   }
+
   const onMouseLeave = () => {
     isChanging = false
   }
+
   const onMouseStart = () => {
     isChanging = true
   }
+
   const generateStyles = () => {
     return styles(props)
   }

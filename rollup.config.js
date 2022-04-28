@@ -16,14 +16,6 @@ export default {
     {
       file: "lib/index.cjs.js",
       format: "cjs"
-    },
-    {
-      name: "ReactCustomRangeSlider",
-      file: "lib/index.umd.js",
-      format: "umd",
-      globals: {
-        react: "React"
-      }
     }
   ],
   plugins: [
