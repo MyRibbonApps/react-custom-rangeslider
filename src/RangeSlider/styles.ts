@@ -5,8 +5,6 @@ type RangeSliderProps = {
   trackBg?: string
   thumbBg?: string
   size?: string
-  trackSize?: number
-  thumbSize?: number
 }
 
 export default function generateStyles({
