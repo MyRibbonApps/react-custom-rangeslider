@@ -7,6 +7,7 @@ import json from "@rollup/plugin-json"
 
 // const production = !process.env.ROLLUP_WATCH
 export default {
+  check: false,
   input: "src/index.ts",
   output: [
     {

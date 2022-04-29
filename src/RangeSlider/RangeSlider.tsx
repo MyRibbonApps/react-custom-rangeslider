@@ -7,9 +7,9 @@ type RangeSliderProps = {
   thumbBg?: string
   size?: "S" | "M" | "L" | "XL" | "XXL"
 
-  min?: number
-  max?: number
-  step?: number
+  min?: number | string
+  max?: number | string
+  step?: number | string
 
   value: any
   setValue: any
@@ -48,6 +48,7 @@ const RangeSlider = (props: RangeSliderProps) => {
     <>
       <style>{generateStyles()}</style>
       <input
+        data-testid="rangeSliderID"
         ref={inputRef}
         type="range"
         min={min}
