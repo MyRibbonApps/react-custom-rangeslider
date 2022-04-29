@@ -12,11 +12,11 @@ on:
 jobs: 
   build:
     runs-on: ubuntu-latest
-      steps: 
-        - uses: action/checkout@v2
-        - name: Install dep
-          run: yarn
-        - name: Build packages
-          run: yarn build
-        - name: Automated tests
-          run: yarn test
+    steps: 
+      - uses: action/checkout@v2
+      - name: Install dep
+        run: yarn
+      - name: Build packages
+        run: yarn build
+      - name: Automated tests
+        run: yarn test
