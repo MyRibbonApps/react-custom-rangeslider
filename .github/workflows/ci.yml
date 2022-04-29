@@ -1,12 +1,12 @@
-name: Build and the Test CI
+name: Build and Test CI
 
 on:
   push:
     branches:
-      -main
+      - master
   pull_request:
     branches:
-      -main
+      - master
 
 
 jobs: 
