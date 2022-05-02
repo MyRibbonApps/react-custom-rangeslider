@@ -16,7 +16,5 @@
     "resolveJsonModule": true
   },
   "include": ["src", "./declaration.d.ts"],
-  "exclude": ["node_modules", "lib"]
-
-  //Add when bundling "exclude": ["node_modules", "lib", "**/*.test.tsx"]
+  "exclude": ["node_modules", "lib", "**/*.stories.tsx", "src/**/*.test.tsx"]
 }

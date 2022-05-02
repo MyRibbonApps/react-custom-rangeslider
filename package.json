@@ -2,8 +2,8 @@
   "name": "react-custom-rangeslider",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/index.cjs.js",
-  "module": "lib/index.esm.js",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
   "sideEffects": false,
   "scripts": {
     "lint": "eslint '**/*.js'",
@@ -28,11 +28,7 @@
     "type": "git",
     "url": "git+https://github.com/MyRibbonApps/react-custom-rangeslider.git"
   },
-  "keywords": [
-    "react rangeslider",
-    "react",
-    "react slider"
-  ],
+  "keywords": [],
   "author": "Anton Franzen",
   "license": "MIT",
   "bugs": {

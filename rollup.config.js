@@ -9,20 +9,30 @@ import json from "@rollup/plugin-json"
 export default {
   check: false,
   input: "src/index.ts",
+  // output: [
+  //   {
+  //     file: "lib/index.esm.js",
+  //     format: "esm",
+  //   },
+  //   {
+  //     file: "lib/index.cjs.js",
+  //     format: "cjs",
+  //   },
+  // ],
   output: [
     {
-      file: "lib/index.esm.js",
+      dir: "lib/esm",
       format: "esm"
     },
     {
-      file: "lib/index.cjs.js",
+      dir: "lib/cjs",
       format: "cjs"
     }
   ],
   plugins: [
     resolve(),
     babel({
-      exclude: "node_modules/**"
+      exclude: ["node_modules/**", "tests/**"]
     }),
     // For mimimize the bundle
     // production && terser(),
@@ -34,5 +44,6 @@ export default {
       include: "**/*.css"
     })
   ],
+  preserveModules: true,
   external: ["react", "react-dom"]
 }
